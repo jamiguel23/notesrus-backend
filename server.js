@@ -1,18 +1,24 @@
+'use strict'
+
 const express = require('express');
-const MongoClient = require('mongodb').MongoClient
+require('dotenv').config();
+// const MongoClient = require('mongodb').MongoClient
+const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
-const db = require('./config/db.js')
 const app = express();
-const port = 3001
+const PORT = process.env.PORT || 3001
+const db = mongoose.connection
+
 app.use(bodyParser.urlencoded({extended: true}))
 
+db.on('error' , console.error.bind(console, 'Connection Error'));
 
-
-MongoClient.connect(db.url, (err, database) =>{
-  if (err) return console.log(err);
-
-  require('./app/routes')(app,database)
-  app.listen(port, () => {
-    console.log('Listening on port', port)
-  });
+db.once('open', function(){
+  console.log('Mongoose is connected, playa')
 });
+
+
+
+app.listen(PORT, () =>{
+  console.log(`Listening on ${PORT}`)
+})
