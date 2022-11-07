@@ -1,7 +1,7 @@
 'use strict'
 
 const express = require('express');
-require('dotenv').config();
+// require('dotenv').config();
 // const MongoClient = require('mongodb').MongoClient
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser');
@@ -16,6 +16,8 @@ db.on('error' , console.error.bind(console, 'Connection Error'));
 db.once('open', function(){
   console.log('Mongoose is connected, playa')
 });
+
+// mongoose.connect('')
 
 
 
